@@ -216,7 +216,7 @@ namespace Thinktecture.IdentityServer.AspNetIdentity
             {
                 if (userManager.SupportsUserLockout)
                 {
-                    userManager.ResetAccessFailedCount(user.Id);
+                    await userManager.ResetAccessFailedCountAsync(user.Id);
                 }
 
                 var result = await PostAuthenticateLocalAsync(user, message);
