@@ -4,15 +4,15 @@
     <id>Thinktecture.IdentityServer3.AspNetIdentity</id>
     <version>0.0.0</version>
     <title>Thinktecture IdentityServer3 - AspNetIdentity</title>
-    <authors>Brock Allen, Dominick Baier</authors>
+    <authors>Brock Allen, Dominick Baier, Sixten Otto</authors>
     <owners>Brock Allen, Dominick Baier</owners>
     <projectUrl>https://github.com/IdentityServer/Thinktecture.IdentityServer3.AspNetIdentity</projectUrl>
     <iconUrl>http://www.thinktecture.com/images/favicon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>ASP.NET Identity support for IdentityServer3</summary>
     <description>ASP.NET Identity support for IdentityServer3</description>
-    <releaseNotes></releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <releaseNotes>Replace a synchronous extension with the real async method.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
     <tags>Thinktecture IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity AspNetIdentity</tags>
   </metadata>
 </package>
