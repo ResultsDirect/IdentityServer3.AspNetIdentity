@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>ASP.NET Identity support for IdentityServer3</summary>
     <description>ASP.NET Identity support for IdentityServer3</description>
-    <releaseNotes>Replace a synchronous extension with the real async method.</releaseNotes>
+    <releaseNotes>Add logging to AuthenticateLocalAsync.</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Thinktecture IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity AspNetIdentity</tags>
   </metadata>
