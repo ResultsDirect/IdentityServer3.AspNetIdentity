@@ -20,11 +20,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Thinktecture.IdentityServer.Core.Logging;
 using Thinktecture.IdentityServer.Core.Models;
 using Thinktecture.IdentityServer.Core.Services;
 using Thinktecture.IdentityServer.Core.Extensions;
 using Thinktecture.IdentityModel;
-using Thinktecture.IdentityServer.Core;
 
 namespace Thinktecture.IdentityServer.AspNetIdentity
 {
@@ -32,6 +32,8 @@ namespace Thinktecture.IdentityServer.AspNetIdentity
         where TUser : class, IUser<TKey>, new()
         where TKey : IEquatable<TKey>
     {
+        private readonly static ILog Logger = LogProvider.GetCurrentClassLogger();
+
         public string DisplayNameClaimType { get; set; }
         public bool EnableSecurityStamp { get; set; }
 
@@ -197,18 +199,21 @@ namespace Thinktecture.IdentityServer.AspNetIdentity
         {
             if (!userManager.SupportsUserPassword)
             {
+                Logger.FatalFormat("Could not attempt authentication for {0}: user manager doesn't support password authentication.", username);
                 return null;
             }
 
             var user = await FindUserAsync(username);
             if (user == null)
             {
+                Logger.DebugFormat("User {0} could not be found.", username);
                 return null;
             }
 
             if (userManager.SupportsUserLockout &&
                 await userManager.IsLockedOutAsync(user.Id))
             {
+                Logger.DebugFormat("User {0} is locked out: authentication must fail.", username);
                 return null;
             }
 
@@ -223,11 +228,16 @@ namespace Thinktecture.IdentityServer.AspNetIdentity
                 if (result != null) return result;
 
                 var claims = await GetClaimsForAuthenticateResult(user);
+                Logger.DebugFormat("User {0} = {1} successfully logged in.", username, user.Id);
                 return new AuthenticateResult(user.Id.ToString(), await GetDisplayNameForAccountAsync(user.Id), claims);
             }
             else if (userManager.SupportsUserLockout)
             {
+                Logger.DebugFormat("User {0} provided invalid credentials; handle failure (and potential lockout).", username);
                 await userManager.AccessFailedAsync(user.Id);
+            }
+            else {
+                Logger.DebugFormat("User {0} provided invalid credentials; lockout not supported.", username);
             }
 
             return null;
