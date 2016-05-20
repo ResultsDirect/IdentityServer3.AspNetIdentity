@@ -19,12 +19,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityServer3.Core.Logging;
 using IdentityServer3.Core.Models;
-using IdentityServer3.Core.Services;
+using IdentityServer3.Core.Services.Default;
 using IdentityServer3.Core.Extensions;
 using IdentityServer3.Core;
 using IdentityModel;
-using IdentityServer3.Core.Services.Default;
 
 namespace IdentityServer3.AspNetIdentity
 {
@@ -32,6 +32,8 @@ namespace IdentityServer3.AspNetIdentity
         where TUser : class, Microsoft.AspNet.Identity.IUser<TKey>, new()
         where TKey : IEquatable<TKey>
     {
+        private readonly static ILog Logger = LogProvider.For<AspNetIdentityUserService<TUser, TKey>>();
+
         public string DisplayNameClaimType { get; set; }
         public bool EnableSecurityStamp { get; set; }
 
@@ -206,6 +208,7 @@ namespace IdentityServer3.AspNetIdentity
                     if (userManager.SupportsUserLockout &&
                         await userManager.IsLockedOutAsync(user.Id))
                     {
+                        Logger.DebugFormat("User {0} is locked out: authentication must fail.", username);
                         return;
                     }
 
@@ -222,14 +225,25 @@ namespace IdentityServer3.AspNetIdentity
                             var claims = await GetClaimsForAuthenticateResult(user);
                             result = new AuthenticateResult(user.Id.ToString(), await GetDisplayNameForAccountAsync(user.Id), claims);
                         }
-                        
+
+                        Logger.DebugFormat("User {0} = {1} successfully logged in.", username, user.Id);
                         ctx.AuthenticateResult = result;
                     }
                     else if (userManager.SupportsUserLockout)
                     {
+                        Logger.DebugFormat("User {0} provided invalid credentials; handle failure (and potential lockout).", username);
                         await userManager.AccessFailedAsync(user.Id);
                     }
+                    else {
+                        Logger.DebugFormat("User {0} provided invalid credentials; lockout not supported.", username);
+                    }
                 }
+                else {
+                    Logger.DebugFormat("User {0} could not be found.", username);
+                }
+            }
+            else {
+                Logger.FatalFormat("Could not attempt authentication for {0}: user manager doesn't support password authentication.", username);
             }
         }
 
