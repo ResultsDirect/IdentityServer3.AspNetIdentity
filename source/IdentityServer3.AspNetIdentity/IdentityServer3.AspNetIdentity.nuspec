@@ -4,7 +4,7 @@
     <id>IdentityServer3.AspNetIdentity</id>
     <version>0.0.0</version>
     <title>IdentityServer3 - AspNetIdentity</title>
-    <authors>Brock Allen, Dominick Baier</authors>
+    <authors>Brock Allen, Dominick Baier, Sixten Otto</authors>
     <owners>Brock Allen, Dominick Baier</owners>
     <projectUrl>https://github.com/IdentityServer/IdentityServer3.AspNetIdentity</projectUrl>
     <iconUrl>https://identityserver.github.io/Documentation/assets/images/icons/IDserver_icon128.jpg</iconUrl>
@@ -12,14 +12,14 @@
     <licenseUrl>https://github.com/IdentityServer/IdentityServer3.AspNetIdentity/blob/master/LICENSE</licenseUrl>
     <summary>ASP.NET Identity support for IdentityServer3</summary>
     <description>ASP.NET Identity support for IdentityServer3</description>
-    <releaseNotes></releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <releaseNotes>Update IdentityServer3 dependency; add logging to authentication process.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
     <tags>IdentityServer OpenID Connect OpenIDConnect OAuth2 OWIN ASP.NET Katana WebApi SSO Federation Claims Identity AspNetIdentity</tags>
 
     <dependencies>
-      <dependency id="IdentityServer3" version="2.0.0"  />
+      <dependency id="IdentityServer3" version="2.5.0"  />
       <dependency id="Microsoft.AspNet.Identity.Core" version="2.2.1" />
-      <dependency id="IdentityModel" version="1.0.0" />
+      <dependency id="IdentityModel" version="1.11.0" />
     </dependencies>
   </metadata>
   <files>

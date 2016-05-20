@@ -8,7 +8,7 @@ properties {
     $solutionFilePath = "$srcDir\$projectName.sln"
     
     $buildNumber = 0
-    $version = "2.0.0.0"
+    $version = "2.0.1.0"
     $preRelease = $null
 }
 
